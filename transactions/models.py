@@ -11,7 +11,9 @@ class TransactionHistory(models.Model):
     transaction_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False
     )
-    account_id = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account_id = models.ForeignKey(
+        Account, on_delete=models.CASCADE, related_name="transactions"
+    )
     amount = models.BigIntegerField()
     balance_after_transaction = models.BigIntegerField()
     transaction_description = models.TextField()
