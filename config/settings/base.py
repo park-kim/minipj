@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # own apps
+    "core",
     "accounts",
     "analytics",
     "notifications",
