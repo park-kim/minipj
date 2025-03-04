@@ -37,8 +37,6 @@ INSTALLED_APPS = [
     "notifications",
     "users",
     "transactions",
-
-
     "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
