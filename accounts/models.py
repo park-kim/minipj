@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 
 from constants import ACCOUNT_TYPE, BANK_CODES
-from users import User
+from users.models import User
 
 
 # Create your models here.
