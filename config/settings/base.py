@@ -31,6 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # own apps
+    "accounts",
+    "analytics",
+    "notifications",
+    "users",
+    "transactions",
+
+
     "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
