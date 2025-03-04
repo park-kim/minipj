@@ -11,8 +11,8 @@ class Account(models.Model):
     account_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="accounts")
     account_number = models.CharField(unique=True, max_length=255)
-    bank_code = models.CharField(max_length=10, choices=BANK_CODES)
-    account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPE)
+    bank_code = models.CharField(max_length=50, choices=BANK_CODES)
+    account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPE)
     balance = models.BigIntegerField()
 
     def __str__(self):
