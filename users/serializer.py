@@ -42,7 +42,7 @@ class UserJoinSerializer(serializers.ModelSerializer):
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["email", "password"]
+        fields = ["user_id", "email", "password", "username"]
 
 
 class UserLoginSerializer(serializers.Serializer):

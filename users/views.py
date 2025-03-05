@@ -1,4 +1,7 @@
+from functools import partial
+
 from django.contrib.auth import authenticate
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -7,6 +10,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
+from users.permissions import IsOwner
 from users.serializer import (
     UserJoinSerializer,
     UserListSerializer,
@@ -73,3 +77,32 @@ class Logout(APIView):
 
         except Exception as e:
             return Response({"error": str(e)}, status=400)
+
+
+class UserManage(APIView):
+    permission_classes = [IsAuthenticated, IsOwner]
+
+    def get(self, request):
+        user = get_object_or_404(User, email=request.user.email)
+        serializer = UserListSerializer(user)
+        return Response(serializer.data, status=200)
+
+    def put(self, request):
+        user = get_object_or_404(User, email=request.user.email)
+        serializer = UserListSerializer(user, data=request.data, partial=True)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=200)
+
+    def patch(self, request):
+        user = get_object_or_404(User, email=request.user.email)
+        serializer = UserListSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=200)
+
+    def delete(self, request):
+        user = get_object_or_404(User, email=request.user.email)
+        user.delete()
+        return Response({"msg": "Successfully deleted"}, status=200)
