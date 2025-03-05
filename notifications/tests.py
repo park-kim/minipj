@@ -45,14 +45,18 @@ class NotificationModelTest(TestCase):
 
         # Then: 삭제 확인
         with self.assertRaises(Notification.DoesNotExist):
-            Notification.objects.get(notification_id=self.notification.notification_id)
+            Notification.objects.get(
+                notification_id=self.notification.notification_id
+            )
 
     def test_multiple_notifications(self):
         # When: 추가 알림 생성
         Notification.objects.create(user_id=self.user, message="test message2")
 
         # Then: 사용자에 연결된 알림 수 확인
-        notifications_count = Notification.objects.filter(user_id=self.user).count()
+        notifications_count = Notification.objects.filter(
+            user_id=self.user
+        ).count()
         self.assertEqual(notifications_count, 2)
 
     def test_user_notification_relationship(self):

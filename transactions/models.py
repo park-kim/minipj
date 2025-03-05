@@ -18,7 +18,9 @@ class TransactionHistory(models.Model):
     balance_after_transaction = models.BigIntegerField()
     transaction_description = models.TextField()
     transaction_type = models.CharField(max_length=50, choices=TRANSACTION_TYPE)
-    transaction_method = models.CharField(max_length=50, choices=TRANSACTION_METHOD)
+    transaction_method = models.CharField(
+        max_length=50, choices=TRANSACTION_METHOD
+    )
     transaction_date = models.DateTimeField()
 
     def __str__(self):

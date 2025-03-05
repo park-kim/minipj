@@ -7,8 +7,11 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
-from users.serializer import (UserJoinSerializer, UserListSerializer,
-                              UserLoginSerializer)
+from users.serializer import (
+    UserJoinSerializer,
+    UserListSerializer,
+    UserLoginSerializer,
+)
 
 
 class UserRegister(APIView):
@@ -49,7 +52,8 @@ class Login(APIView):
                 )
 
             return Response(
-                {"message": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED
+                {"message": "Invalid credentials"},
+                status=status.HTTP_401_UNAUTHORIZED,
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

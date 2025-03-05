@@ -9,8 +9,12 @@ from users.models import User
 
 
 class Analysis(models.Model):
-    analysis_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="analyses")
+    analysis_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="analyses"
+    )
     account = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name="analyses"
     )

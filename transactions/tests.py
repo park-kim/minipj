@@ -45,7 +45,9 @@ class TransactionHistoryModelTest(TestCase):
         self.assertEqual(transaction.account_id, self.account)
         self.assertEqual(transaction.amount, 50000)
         self.assertEqual(transaction.balance_after_transaction, 950000)
-        self.assertEqual(transaction.transaction_description, "test transaction")
+        self.assertEqual(
+            transaction.transaction_description, "test transaction"
+        )
         self.assertEqual(transaction.transaction_type, "withdrawal")
         self.assertEqual(transaction.transaction_method, "ATM")
 

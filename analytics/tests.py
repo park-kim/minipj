@@ -60,7 +60,9 @@ class TestAnalysis(TestCase):
         self.analysis.description = "Updated description"
         self.analysis.save()
 
-        updated_analysis = Analysis.objects.get(analysis_id=self.analysis.analysis_id)
+        updated_analysis = Analysis.objects.get(
+            analysis_id=self.analysis.analysis_id
+        )
         self.assertEqual(updated_analysis.description, "Updated description")
 
     def test_delete_analysis(self):

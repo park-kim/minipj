@@ -28,6 +28,8 @@ class Command(BaseCommand):
                     )
                 else:
                     self.stdout.write(
-                        self.style.WARNING("PostgreSQL Connection Failed! Retrying...")
+                        self.style.WARNING(
+                            "PostgreSQL Connection Failed! Retrying..."
+                        )
                     )
                     time.sleep(1)
