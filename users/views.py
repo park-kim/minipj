@@ -1,16 +1,15 @@
-
 from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from users.serializer import UserJoinSerializer, UserListSerializer
 from users.models import User
+from users.serializer import UserJoinSerializer, UserListSerializer
 
 
 class UserRegister(APIView):
 
-    def get(self,request):
+    def get(self, request):
         users = User.objects.all()
         print(users)
         serializer = UserListSerializer(users, many=True)
@@ -22,4 +21,3 @@ class UserRegister(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
