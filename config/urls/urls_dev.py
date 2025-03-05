@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from users.views import Login, Logout, UserRegister
+from users.views import Login, Logout, UserManage, UserRegister
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -31,4 +31,5 @@ urlpatterns = [
     # Login
     path("users/login/", Login.as_view(), name="login"),
     path("users/logout/", Logout.as_view(), name="logout"),
+    path("users/", UserManage.as_view(), name="user_manage"),
 ]
