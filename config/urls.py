@@ -22,5 +22,5 @@ from users.views import UserRegister
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('users/', UserRegister.as_view(), name='users')
+    path("users/", UserRegister.as_view(), name="users"),
 ]
