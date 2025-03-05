@@ -5,14 +5,14 @@ from users.models import User
 
 class TestUser(TestCase):
     email = "test@asd.com"
-    nickname = "testnick"
+    username = "testnick"
     phone_number = "123123"
 
     def setUp(self):
         # 객체를 생성하고 반환된 값을 new_user에 할당합니다.
         self.new_user = User.objects.create(
             email=self.email,
-            nickname=self.nickname,
+            username=self.username,
             phone_number=self.phone_number,
         )
 
@@ -25,7 +25,7 @@ class TestUser(TestCase):
         # 유저를 가져와서 필드 값 비교
         exist_user = User.objects.get(pk=self.new_user.pk)
         self.assertEqual(exist_user.email, self.email)
-        self.assertEqual(exist_user.nickname, self.nickname)
+        self.assertEqual(exist_user.username, self.username)
         self.assertEqual(exist_user.phone_number, self.phone_number)
 
     def test_put_user(self):
