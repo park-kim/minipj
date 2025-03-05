@@ -13,7 +13,7 @@ class TransactionHistoryModelTest(TestCase):
         self.user = User.objects.create(
             email="testuser@example.com",
             password="testpassword",
-            nickname="testnickname",
+            username="testnickname",
             phone_number="01012345678",
         )
 
