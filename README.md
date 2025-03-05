@@ -25,3 +25,6 @@
 -------
 ## ERD
 ![Image](https://github.com/user-attachments/assets/1089ad57-e154-42bd-a217-ca4f45ecb469)
+
+## Flowchart 
+![Image](https://github.com/user-attachments/assets/53cf6b6d-eef8-49aa-a2f7-13c0e87ed7f4)
