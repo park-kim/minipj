@@ -11,15 +11,24 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import json
+import os
 from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-with open(BASE_DIR / "secrets.json") as f:
-    config_secret_str = f.read()
+secrets_json = os.getenv("SECRETS_JSON")
 
-SECRET = json.loads(config_secret_str)
+if secrets_json:
+    SECRET = json.loads(secrets_json)
+else:
+    # 로컬 개발 환경에서는 기존 secrets.json 사용
+    try:
+        with open(BASE_DIR / "secrets.json") as f:
+            config_secret_str = f.read()
+        SECRET = json.loads(config_secret_str)
+    except FileNotFoundError:
+        SECRET = {}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
