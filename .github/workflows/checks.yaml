@@ -18,6 +18,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.PG_USER }}
           POSTGRES_PASSWORD: ${{ secrets.PG_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_NAME }}
+          SECRETS_JSON: ${{ secrets.SECRETS_JSON }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -32,6 +33,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.13'
+      - name: Create secrets.json
+        run: |
+          echo '${{ secrets.SECRETS_JSON }}' > $GITHUB_WORKSPACE/secrets.json
 
       - name: Install Poetry
         run: |

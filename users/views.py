@@ -1,6 +1,8 @@
 from functools import partial
 
 from django.contrib.auth import authenticate
+from django.core import signing
+from django.core.signing import SignatureExpired, TimestampSigner
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status
@@ -16,19 +18,40 @@ from users.serializer import (
     UserListSerializer,
     UserLoginSerializer,
 )
+from utils.email import send_email
+
+
+class VerifyEmail(APIView):
+    permission_classes = []
+
+    def get(self, request):
+        code = request.GET.get("code", "")
+        signer = TimestampSigner()
+        try:
+            decoded_user_email = signing.loads(code)
+            email = signer.unsign(decoded_user_email, max_age=60)
+        except (TypeError, SignatureExpired) as e:
+            return Response({"error": str(e)}, 400)
+
+        user = get_object_or_404(User, email=email, is_active=False)
+        user.is_active = True
+        user.save()
+
+        return Response({"msg": "Success verified"}, 200)
 
 
 class UserRegister(APIView):
-
-    def get(self, request):
-        users = User.objects.all()
-        print(users)
-        serializer = UserListSerializer(users, many=True)
-        return Response(serializer.data, status=200)
-
     def post(self, request):
         serializer = UserJoinSerializer(data=request.data)
         if serializer.is_valid():
+            signer = TimestampSigner()
+            signed_user_email = signer.sign(serializer.validated_data["email"])
+            signer_dump = signing.dumps(signed_user_email)
+            url = f"{request.scheme}://{request.get_host()}/verify/?code={signer_dump}"
+
+            subject = "[parkim]이메일 인증을 완료해 주세요"
+            message = f'다음 링크를 클릭해 주세요. <a href="{url}">url</a>'
+            send_email(subject, message, serializer.validated_data["email"])
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
