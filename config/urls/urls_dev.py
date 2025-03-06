@@ -20,6 +20,7 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 import users
+from transactions.views import Transaction
 from users.views import Login, Logout, UserManage, UserRegister, VerifyEmail
 
 urlpatterns = [
@@ -35,4 +36,10 @@ urlpatterns = [
     path("users/", UserManage.as_view(), name="user_manage"),
     # 이메일 인증
     path("verify/", VerifyEmail.as_view(), name="verify_email"),
+    path("transactions/", Transaction.as_view(), name="transactions_list"),
+    path(
+        "transactions/<str:pk>",
+        Transaction.as_view(),
+        name="transactions_detail",
+    ),
 ]
