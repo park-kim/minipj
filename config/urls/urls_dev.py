@@ -46,7 +46,7 @@ urlpatterns = [
     ),
     path(
         "accounts/masked/", MaskedAccountView.as_view(), name="masked-accounts"
-
+    ),
     path("transactions/", Transaction.as_view(), name="transactions_list"),
     path(
         "transactions/<str:pk>",
