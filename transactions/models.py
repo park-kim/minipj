@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.db.models.manager import Manager
 
 from accounts.models import Account
 from constants import TRANSACTION_METHOD, TRANSACTION_TYPE
@@ -21,7 +22,9 @@ class TransactionHistory(models.Model):
     transaction_method = models.CharField(
         max_length=50, choices=TRANSACTION_METHOD
     )
-    transaction_date = models.DateTimeField()
+    transaction_date = models.DateTimeField(auto_now_add=True)
+
+    objects = Manager()
 
     def __str__(self):
         return str(self.transaction_id)

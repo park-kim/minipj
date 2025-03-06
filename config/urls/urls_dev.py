@@ -21,6 +21,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 import users
 from accounts.views import AccountDetailView, AccountView, MaskedAccountView
+from transactions.views import Transaction
 from users.views import Login, Logout, UserManage, UserRegister, VerifyEmail
 
 urlpatterns = [
@@ -45,5 +46,11 @@ urlpatterns = [
     ),
     path(
         "accounts/masked/", MaskedAccountView.as_view(), name="masked-accounts"
+
+    path("transactions/", Transaction.as_view(), name="transactions_list"),
+    path(
+        "transactions/<str:pk>",
+        Transaction.as_view(),
+        name="transactions_detail",
     ),
 ]
