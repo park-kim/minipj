@@ -19,7 +19,8 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from users.views import Login, Logout, UserManage, UserRegister
+import users
+from users.views import Login, Logout, UserManage, UserRegister, VerifyEmail
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -32,4 +33,6 @@ urlpatterns = [
     path("users/login/", Login.as_view(), name="login"),
     path("users/logout/", Logout.as_view(), name="logout"),
     path("users/", UserManage.as_view(), name="user_manage"),
+    # 이메일 인증
+    path("verify/", VerifyEmail.as_view(), name="verify_email"),
 ]
