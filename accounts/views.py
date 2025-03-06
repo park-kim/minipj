@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.models import Account
-from accounts.serializers import AccountSerializer
+from accounts.serializers import AccountDetailSerializer, AccountSerializer
 from users.permissions import IsOwner
 
 
@@ -35,33 +35,17 @@ class AccountDetailView(APIView):
             Account, account_number=account_number, user_id=request.user.user_id
         )
 
-        transactions = []
-        for transaction in account.transactions.all().order_by(
-            "-transaction_date"
-        ):
-            transactions.append(
-                {
-                    "transaction_id": transaction.transaction_id,
-                    "amount": transaction.amount,
-                    "balance_after_transaction": transaction.balance_after_transaction,
-                    "transaction_description": transaction.transaction_description,
-                    "transaction_type": transaction.transaction_type,
-                    "transaction_method": transaction.transaction_method,
-                    "transaction_date": transaction.transaction_date,
-                }
-            )
-
-        serializer = AccountSerializer(account)
-        data = serializer.data
-        data["transactions"] = transactions
-        return Response(data, status=status.HTTP_200_OK)
+        serializer = AccountDetailSerializer(account)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, account_number):
         account = get_object_or_404(
             Account, account_number=account_number, user_id=request.user.user_id
         )
         account.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"msg": "Successfully deleted"}, status=status.HTTP_204_NO_CONTENT
+        )
 
 
 class MaskedAccountView(APIView):
