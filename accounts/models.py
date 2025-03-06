@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.db.models import Manager
 
 from constants import ACCOUNT_TYPE, BANK_CODES
 from users.models import User
@@ -18,6 +19,8 @@ class Account(models.Model):
     bank_code = models.CharField(max_length=50, choices=BANK_CODES)
     account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPE)
     balance = models.BigIntegerField()
+
+    objects = Manager()
 
     def __str__(self):
         return self.account_number
